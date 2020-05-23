@@ -8,13 +8,51 @@ const databaseName = "task-manager";
 
 MongoClient.connect(
   connectionURL,
-  { useNewUrlParser: true },
+  { useUnifiedTopology: true, useNewUrlParser: true },
   (error, client) => {
     if (error) {
       return console.log("Unable to connect to database!");
     }
 
     const db = client.db(databaseName);
+
+    // db.collection("users")
+    // .updateOne(
+    //   {
+    //     _id: new ObjectID("5ec81716f855b6259448c84e"),
+    //   },
+    //   {
+    //     // $set: {
+    //     //   name: "Mike",
+    //     // },
+    //     $inc: {
+    //       age: 1,
+    //     },
+    //   }
+    // )
+    // .then((result) => {
+    //   console.log(result);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+    db.collection("tasks")
+      .updateMany(
+        {
+          completed: false,
+        },
+        {
+          $set: {
+            completed: true,
+          },
+        }
+      )
+      .then((result) => {
+        console.log("Modified:", result.modifiedCount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 );
 
