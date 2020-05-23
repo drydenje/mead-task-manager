@@ -16,6 +16,26 @@ MongoClient.connect(
 
     const db = client.db(databaseName);
 
+    db.collection("tasks")
+      .deleteOne({ description: "Buy milk" })
+      .then((result) => {
+        console.log(result.deletedCount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // db.collection("users")
+    //   .deleteMany({
+    //     age: 27,
+    //   })
+    //   .then((result) => {
+    //     console.log(result.deletedCount);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
     // db.collection("users")
     // .updateOne(
     //   {
@@ -36,23 +56,23 @@ MongoClient.connect(
     // .catch((error) => {
     //   console.log(error);
     // });
-    db.collection("tasks")
-      .updateMany(
-        {
-          completed: false,
-        },
-        {
-          $set: {
-            completed: true,
-          },
-        }
-      )
-      .then((result) => {
-        console.log("Modified:", result.modifiedCount);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // db.collection("tasks")
+    //   .updateMany(
+    //     {
+    //       completed: false,
+    //     },
+    //     {
+    //       $set: {
+    //         completed: true,
+    //       },
+    //     }
+    //   )
+    //   .then((result) => {
+    //     console.log("Modified:", result.modifiedCount);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 );
 
