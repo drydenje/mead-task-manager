@@ -6,8 +6,3 @@ mongoose.connect(url, {
   useNewUrlParser: true,
   useCreateIndex: true,
 });
-
-const Task = mongoose.model("Task", {
-  description: { type: String, trim: true, required: true },
-  completed: { type: Boolean, required: false, default: false },
-});
