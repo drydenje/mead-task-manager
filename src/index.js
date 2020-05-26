@@ -46,6 +46,36 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
+app.patch("/users/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["name", "email", "password", "age"];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: "Invalid updates!" });
+  }
+
+  const _id = req.params.id;
+  const _body = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(_id, _body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!user) {
+      return res.status(404).send();
+    }
+
+    res.send(user);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
 app.post("/tasks", async (req, res) => {
   const task = new Task(req.body);
 
