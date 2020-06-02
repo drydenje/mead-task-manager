@@ -15,15 +15,15 @@ const port = process.env.PORT || 3000;
 //   }
 // });
 
-const maintenance = true;
-app.use((req, res, next) => {
-  if (maintenance) {
-    res.status(503);
-    res.send("Server is currently under maintenance");
-  } else {
-    next();
-  }
-});
+// const maintenance = true;
+// app.use((req, res, next) => {
+//   if (maintenance) {
+//     res.status(503);
+//     res.send("Server is currently under maintenance");
+//   } else {
+//     next();
+//   }
+// });
 
 app.use(express.json());
 app.use(routers);
