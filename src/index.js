@@ -7,6 +7,24 @@ const routers = [userRouter, taskRouter];
 const app = express();
 const port = process.env.PORT || 3000;
 
+// app.use((req, res, next) => {
+//   if (req.method === "GET") {
+//     res.send("GET requests are disabled");
+//   } else {
+//     next();
+//   }
+// });
+
+const maintenance = true;
+app.use((req, res, next) => {
+  if (maintenance) {
+    res.status(503);
+    res.send("Server is currently under maintenance");
+  } else {
+    next();
+  }
+});
+
 app.use(express.json());
 app.use(routers);
 
